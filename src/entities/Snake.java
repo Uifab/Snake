@@ -159,6 +159,10 @@ public class Snake {
 		return false;
 	}
 	
+	public void eat() {
+		
+	}
+	
 	public String toString() {
 		return "Snake( x=" + this.x + ", "
 					+ "y=" + this.y + ", "

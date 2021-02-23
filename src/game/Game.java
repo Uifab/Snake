@@ -1,15 +1,19 @@
 package game;
 
+
+import entities.Apple;
 import entities.Snake;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.geometry.Point2D;
 
 public class Game {
 	
 	//Player
 	private Snake player;
+	private Apple apple;
 	
 	//Game settings
 	private static int windowWidth = 800;
@@ -28,6 +32,8 @@ public class Game {
 	public void Start() {
 		
 		player = new Snake(100, 100);
+		apple = new Apple();
+		
 		
 	}
 	
@@ -107,6 +113,8 @@ public class Game {
 		gc.setFill( player.getColor() );
 		gc.fillRect( player.getX() , player.getY(), player.getWidth(), player.getHeight());
 		
+		apple.printApple(gc);
+		
 	}
 	
 	public void printBackground(GraphicsContext gc) {
@@ -137,5 +145,17 @@ public class Game {
 	public static int getWindowHeight() {
 		return windowHeight;
 	}
+	
+	
+	public static Point2D getRandomPoint() {
+		
+		int x = (int)(Math.random() * Game.windowWidth / Snake.getWidth()) * Snake.getWidth();
+		int y = (int)(Math.random() * Game.windowHeight/ Snake.getHeight())* Snake.getHeight();
+		
+		Point2D randomPoint = new Point2D( x, y);
+		
+		return randomPoint;
+	}
+	
 
 }
