@@ -24,7 +24,7 @@ public class GameController {
 	@FXML
     private void initialize() {
 		
-		System.out.println("Press ENTER to start");
+		this.run();
 		
 	}
 	
@@ -63,7 +63,6 @@ public class GameController {
 		}.start();
 		
 		
-		
 	}
 	
 	public void restartGame() {
@@ -72,19 +71,8 @@ public class GameController {
 
 	
 	public void handleOnKeyPressed(KeyEvent event) {
-		//Start game
-		if( event.getCode().equals(KeyCode.ENTER) ) {
-			System.out.println("Run");
-			this.run();
-		} 
-	
 		//Propagate events to game
 		game.handleKeyPress(event);
 	}
 	
-	public void handleKeyReleased(KeyEvent event) {
-		game.handleKeyReleased(event);
-	}
-	
-
 }

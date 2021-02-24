@@ -1,6 +1,11 @@
 package entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import game.Game;
+import javafx.geometry.Point2D;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Snake {
@@ -13,6 +18,9 @@ public class Snake {
 	private int x;
 	private int y;
 	
+	private List<Point2D> tail;
+	private int tailLength;
+	
 	private int moveX;
 	private int moveY;
 
@@ -23,6 +31,10 @@ public class Snake {
 		this.y = inY;
 		
 		this.color = new Color(Math.random(), Math.random(), Math.random(),1);
+		
+		this.tail = new ArrayList<Point2D>();
+		this.tail.add(this.getPoint());
+		this.tailLength = 1;
 	}
 	
 	
@@ -42,8 +54,16 @@ public class Snake {
 		return height;
 	}
 	
+	public int getScore() {
+		return this.tailLength;
+	}
+	
 	public int getVelocity() {
 		return this.velocity;
+	}
+	
+	public Point2D getPoint() {
+		return new Point2D(this.x, this.y);
 	}
 	
 	
@@ -72,6 +92,14 @@ public class Snake {
 			return ;
 		}
 		
+		//Tail :  (1,1)(1,2)(1,3)
+		
+		
+		tail.add( 0, new Point2D(this.x, this.y) );
+		if( tail.size() > this.tailLength ) {
+			tail.remove( tail.size() - 1 );
+		}
+	
 		
 		//Up
 		if( this.moveY == -1 ) {
@@ -159,9 +187,30 @@ public class Snake {
 		return false;
 	}
 	
-	public void eat() {
+	public void eat(Apple apple) {
+		
+		if( this.getPoint().equals(apple.getPoint()) ) {
+			apple.respawn();
+			this.tailLength+=10;
+			System.out.println("Eat "+ this.tailLength);
+		}
 		
 	}
+	
+	public void printSnake( GraphicsContext gc ) {
+		//PrintHead
+		gc.setFill(this.color);
+		//gc.fillRect( this.x, this.y, this.width, this.height );
+		
+		Color auxColor = this.color;
+		
+		for( Point2D tailElement: this.tail ) {
+			gc.setFill(auxColor);
+			auxColor = auxColor.brighter();
+			gc.fillRect( tailElement.getX(), tailElement.getY(), this.width, this.height );
+		}
+	}
+	
 	
 	public String toString() {
 		return "Snake( x=" + this.x + ", "

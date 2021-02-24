@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import javafx.geometry.Point2D;
 
 public class Game {
@@ -22,8 +23,6 @@ public class Game {
 	
 	//Game Background
 	private Color background = Color.WHITE;
-	
-	
 	
 	public Game() {
 		
@@ -72,34 +71,12 @@ public class Game {
 		
 	}
 	
-	public void handleKeyReleased( KeyEvent event ) {
-		/*
-		System.out.println("Key released " + event.getCode());
-		
-		//In game
-		if( this.player != null ) {
-			
-			if( event.getCode().equals( KeyCode.UP ) ) {
-				this.player.removeKeyPressed(1);
-				
-			}else if( event.getCode().equals( KeyCode.RIGHT ) ) {
-				this.player.removeKeyPressed(2);
-					
-			}else if( event.getCode().equals( KeyCode.DOWN ) ) {
-				this.player.removeKeyPressed(3);
-					
-			}else if( event.getCode().equals( KeyCode.LEFT ) ) {
-				this.player.removeKeyPressed(4);
-			}
-		}*/
-		
-	}
-	
 	
 	//Where the magic happens
 	public void gameTick(GraphicsContext gc) {
 		
 		player.move();
+		player.eat(apple);
 		
 		
 		//Check player
@@ -110,10 +87,11 @@ public class Game {
 		this.printBackground(gc);
 		
 		//Print player
-		gc.setFill( player.getColor() );
-		gc.fillRect( player.getX() , player.getY(), player.getWidth(), player.getHeight());
+		player.printSnake(gc);
 		
 		apple.printApple(gc);
+		
+		this.printScore(gc,player.getScore());
 		
 	}
 	
@@ -157,5 +135,12 @@ public class Game {
 		return randomPoint;
 	}
 	
+	
+	public void printScore( GraphicsContext gc, int score ) {
+		
+		gc.setTextAlign(TextAlignment.RIGHT);;
+        gc.strokeText("Score : "+score, 770, 30);
+		
+	}
 
 }

@@ -31,6 +31,11 @@ public class Apple {
 		y = (int) point.getY();
 	}
 	
+	
+	public Point2D getPoint() {
+		return new Point2D( this.x, this.y );
+	}
+	
 	public void printApple(GraphicsContext gc) {
 		
 		gc.setFill( this.color );
@@ -38,9 +43,14 @@ public class Apple {
 		
 	}
 	
+	public void respawn() {
+		Point2D point = Game.getRandomPoint();
+		x = (int) point.getX();
+		y = (int) point.getY();
+	}
 	
 	public String toString() {
 		return "Apple( ("+x+", "+y+"), ";
 	}
-
+	
 }
